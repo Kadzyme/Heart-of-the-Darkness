@@ -908,7 +908,12 @@ MonoBehaviour:
   combo:
   - damageMultiplicator: 1
     attackPosition: {fileID: 2758314553039345279}
-    additionalEffects: []
+    additionalEffects:
+    - effectType: 2
+      amount: 0
+      duringTime: 0.3
+      currentDuringTime: 0
+      isEndless: 0
   - damageMultiplicator: 0.9
     attackPosition: {fileID: 4655620193659967196}
     additionalEffects:

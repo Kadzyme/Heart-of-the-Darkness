@@ -89,8 +89,10 @@ public class Weapon : MonoBehaviour
         animatorController.IsAttackingFalse();
         doDamage = false;
         UpdateCombo();
-        attackLocked = false;
     }
+
+    public void UnlockAttack()
+        =>attackLocked = false;
 
     private void UpdateCombo()
     {
@@ -99,19 +101,13 @@ public class Weapon : MonoBehaviour
         currentCombo++;
 
         if (currentCombo >= combo.Length)
-        {
             ResetCombo(); 
-            SetComboCooldown();
-        }
     }
 
     public void ResetCombo()
     {
         currentCombo = 0;
-    }
 
-    private void SetComboCooldown()
-    {
         if (randomCooldownMultiplicator == Vector2.zero || randomCooldownMultiplicator.x > randomCooldownMultiplicator.y)
             currentCooldown = cooldown;
         else

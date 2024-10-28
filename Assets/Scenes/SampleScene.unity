@@ -329,17 +329,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 736071592}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1504830651 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2645361258475416671, guid: 43ded28d80914044c8b5df424c68c596, type: 3}
-  m_PrefabInstance: {fileID: 1648997036}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18f1d543fd6e21549907f7515f122ebd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1648997036
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -387,34 +376,6 @@ PrefabInstance:
     - target: {fileID: 267586584183578121, guid: 43ded28d80914044c8b5df424c68c596, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4519942903753943256, guid: 43ded28d80914044c8b5df424c68c596, type: 3}
-      propertyPath: damage.amount
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4519942903753943256, guid: 43ded28d80914044c8b5df424c68c596, type: 3}
-      propertyPath: combo.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4519942903753943256, guid: 43ded28d80914044c8b5df424c68c596, type: 3}
-      propertyPath: combo.Array.data[1].attackPosition
-      value: 
-      objectReference: {fileID: 1504830651}
-    - target: {fileID: 4519942903753943256, guid: 43ded28d80914044c8b5df424c68c596, type: 3}
-      propertyPath: combo.Array.data[1].damageMultiplicator
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4519942903753943256, guid: 43ded28d80914044c8b5df424c68c596, type: 3}
-      propertyPath: combo.Array.data[1].additionalEffects.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4519942903753943256, guid: 43ded28d80914044c8b5df424c68c596, type: 3}
-      propertyPath: combo.Array.data[1].additionalEffects.Array.data[0].duringTime
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4519942903753943256, guid: 43ded28d80914044c8b5df424c68c596, type: 3}
-      propertyPath: combo.Array.data[1].additionalEffects.Array.data[0].effectType
-      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7611460742774183302, guid: 43ded28d80914044c8b5df424c68c596, type: 3}
       propertyPath: m_Name
@@ -488,7 +449,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9124936117069194157, guid: 43ded28d80914044c8b5df424c68c596, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
@@ -778,7 +739,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startCheckpointPos: {fileID: 376655844}
-  playerPrefab: {fileID: 1448179308118082278, guid: 770ba62469fe4e545b3043a7b1621184, type: 3}
+  playerPrefab: {fileID: 6467479996642544154, guid: 6287a1f773f5cd74baccfd21bb6d4a25, type: 3}
   groundLayerNum: 3
   unitsLayerNum: 6
 --- !u!1 &196649861947136095

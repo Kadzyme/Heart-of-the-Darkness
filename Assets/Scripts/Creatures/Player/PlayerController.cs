@@ -74,7 +74,7 @@ public class PlayerController : MonoBehaviour
         if (stats.isStunned)
             return;
 
-        if (Input.GetMouseButtonDown(0) || tryToAttack)
+        if ((Input.GetMouseButtonDown(0) || tryToAttack) && stats.isGrounded)
         {
             if (stats.TryToAttack())
                 tryToAttack = false;
@@ -85,7 +85,7 @@ public class PlayerController : MonoBehaviour
 
         float inputX = Input.GetAxis("Horizontal");
 
-        if (inputX != 0)
+        if (inputX != 0 && stats.CanChangePosition())
             tryToRotate = (true, inputX);
 
         if (!stats.isAttacking && tryToRotate.Item1)

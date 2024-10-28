@@ -67,8 +67,6 @@ public class Stats : MonoBehaviour
         OnStunStartEvent.AddListener(OnStunStart);
 
         OnStunEndEvent.AddListener(OnStunEnd);
-
-        weapon.OnAttackEndEvent.AddListener(OnAttackEnd);
     }
 
     private void OnStunStart()
@@ -78,17 +76,21 @@ public class Stats : MonoBehaviour
         animatorController.PlayStunAnim();
         isAnimFixed = true;
         isStunned = true;
+        positionLocked = true;
     }
 
     private void OnStunEnd()
     {
         isStunned = false;
         isAnimFixed = false;
+        positionLocked = false;
+        weapon.UnlockAttack();
     }
 
-    private void OnAttackEnd()
+    public void UnlockAttackAndPosition()
     {
         positionLocked = false;
+        weapon.UnlockAttack();
     }
 
     private void Update()
