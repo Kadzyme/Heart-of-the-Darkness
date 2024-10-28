@@ -4,28 +4,24 @@ using UnityEngine;
 [RequireComponent(typeof(Collider2D))]
 public class AttackPosition : MonoBehaviour
 {
-    private List<Collider2D> colliders = new();
+    [SerializeField] private ContactFilter2D filter = new();
 
     private void Start()
         => GetComponent<Collider2D>().isTrigger = true;
 
-    private void OnTriggerEnter2D(Collider2D collision)
-        => colliders.Add(collision);
-
     public List<Health> CheckDamagableInRange()
     {
+        List<Collider2D> collisions = new();
+        Collider2D collider2D = GetComponent<Collider2D>();
+
+        collider2D.Overlap(filter, collisions);
+
         List<Health> health = new();
-        foreach (Collider2D collider in colliders)
+        foreach (Collider2D collider in collisions)
         {
             if(collider.GetComponent<Health>() != null)
                 health.Add(collider.GetComponent<Health>());
         }
         return health;
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (colliders.Contains(collision))
-            colliders.Remove(collision);
     }
 }

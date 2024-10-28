@@ -5115,6 +5115,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18f1d543fd6e21549907f7515f122ebd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  filter:
+    useTriggers: 0
+    useLayerMask: 0
+    useDepth: 0
+    useOutsideDepth: 0
+    useNormalAngle: 0
+    useOutsideNormalAngle: 0
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 64
+    minDepth: 0
+    maxDepth: 0
+    minNormalAngle: 0
+    maxNormalAngle: 0
 --- !u!60 &1741402083399677102
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -5215,6 +5229,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18f1d543fd6e21549907f7515f122ebd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  filter:
+    useTriggers: 0
+    useLayerMask: 0
+    useDepth: 0
+    useOutsideDepth: 0
+    useNormalAngle: 0
+    useOutsideNormalAngle: 0
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 64
+    minDepth: 0
+    maxDepth: 0
+    minNormalAngle: 0
+    maxNormalAngle: 0
 --- !u!60 &2381413072283109598
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -5317,6 +5345,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18f1d543fd6e21549907f7515f122ebd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  filter:
+    useTriggers: 0
+    useLayerMask: 0
+    useDepth: 0
+    useOutsideDepth: 0
+    useNormalAngle: 0
+    useOutsideNormalAngle: 0
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 64
+    minDepth: 0
+    maxDepth: 0
+    minNormalAngle: 0
+    maxNormalAngle: 0
 --- !u!60 &5563951276566406947
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -5464,7 +5506,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.96696496, g: 1, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -5476,7 +5518,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 0.806
+  m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -6143,7 +6185,6 @@ MonoBehaviour:
   movementSpeed: 5
   currentMovementSpeed: 0
   jumpForce: 175
-  blockMoveOnAttack: 1
   fraction: 0
   normalXMultiplicator: -1
   effects: []
@@ -6228,7 +6269,7 @@ MonoBehaviour:
       isEndless: 0
   maxComboDuration: 2
   cooldown: 0.2
-  randomCooldownMultiplicator: {x: 0, y: 0}
+  randomCooldownMultiplicator: {x: 1, y: 1.2}
   OnAttackStartEvent:
     m_PersistentCalls:
       m_Calls: []

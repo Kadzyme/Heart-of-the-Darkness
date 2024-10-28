@@ -1,9 +1,19 @@
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Global : MonoBehaviour
 {
+    public static UnityEvent OnReplaceEvent = new();
+    public static List<GameObject> objectsToRevive = new();
+
+    public static Vector2 checkpointPos = Vector2.zero;
+    [SerializeField] private Transform startCheckpointPos;
+
     public static Transform currentPlayer;
-    [SerializeField] private Transform startPlayer;
+
+    private static Transform staticPlayerPrefab;
+    [SerializeField] private Transform playerPrefab;
 
     public static int groundLayer;
     [SerializeField] private int groundLayerNum;
@@ -15,9 +25,34 @@ public class Global : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
 
-        currentPlayer = startPlayer;
+        staticPlayerPrefab = playerPrefab;
+        checkpointPos = startCheckpointPos.position;
+
         groundLayer = 1 << groundLayerNum;
         unitsLayer = 1 << unitsLayerNum;
+
+        CreateNewHero();
+    }
+
+    private void FixedUpdate()
+    {
+        if (currentPlayer == null)
+            CreateNewHero();
+    }
+
+    public static void CreateNewHero()
+    {
+        currentPlayer = Instantiate(staticPlayerPrefab);
+        OnReplaceEvent.Invoke();
+        ReviveObjects();
+    }
+
+    public static void ReviveObjects()
+    {
+        foreach (GameObject objectToRevive in objectsToRevive)
+        {
+            objectToRevive?.SetActive(true);
+        }
     }
 
     public static bool IsEnemy(Fraction obj1, Fraction obj2)

@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public enum Direction
@@ -24,14 +25,15 @@ public struct Damage
 }
 
 [RequireComponent(typeof(AnimatorController))]
+[RequireComponent(typeof(Weapon))]
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Stats))]
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private GroundSensor rightSensor;
     [SerializeField] private GroundSensor leftSensor;
-    private bool tryToAttack = false;
     private (bool, float) tryToRotate = (false, 0);
+    private bool tryToAttack = false;
 
     private Stats stats;
     private Rigidbody2D rb;
@@ -53,6 +55,7 @@ public class PlayerController : MonoBehaviour
     {
         stats.weapon.OnAttackStartEvent.AddListener(OnStartAttack);
         stats.weapon.OnAttackEndEvent.AddListener(OnEndAttack);
+        Global.OnReplaceEvent.AddListener(MoveToLastCheckPoint);
     }
 
     private void OnStartAttack()
@@ -61,6 +64,11 @@ public class PlayerController : MonoBehaviour
     private void OnEndAttack()
         => stats.isAttacking = false;
 
+    private void MoveToLastCheckPoint()
+    {
+        transform.position = Global.checkpointPos;
+    }
+
     private void Update()
     {
         if (stats.isStunned)
@@ -68,10 +76,10 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0) || tryToAttack)
         {
-            if (stats.TryAttack())
+            if (stats.TryToAttack())
                 tryToAttack = false;
 
-            if (stats.isAttacking)
+            if (stats.isAttacking && !tryToAttack)
                 tryToAttack = true;
         }
 
@@ -85,7 +93,7 @@ public class PlayerController : MonoBehaviour
             TryToRotate(tryToRotate.Item2);
         }
 
-        if (!stats.CanMove())
+        if (!stats.CanChangePosition())
         {
             animController.PlayWalkAnim(false);
             return;
@@ -129,7 +137,7 @@ public class PlayerController : MonoBehaviour
 
     private void TryJump()
     {
-        if (!stats.isGrounded || !stats.CanMove())
+        if (!stats.isGrounded || !stats.CanChangePosition())
             return;
 
         stats.isGrounded = false;

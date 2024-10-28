@@ -10,6 +10,7 @@ public enum State
     fight
 }
 
+[RequireComponent(typeof(RevivableObject))]
 [RequireComponent(typeof(Health))]
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(AnimatorController))]
@@ -22,7 +23,7 @@ public class AI : MonoBehaviour
     [SerializeField] private float maxFollowTime;
     private float currentFollowTime;
 
-    [SerializeField] private float viewRange;
+    [SerializeField] private float normalViewRange;
     [SerializeField] private float viewRangeOnDamage;
 
     [SerializeField] private Transform borderSensor;
@@ -57,17 +58,11 @@ public class AI : MonoBehaviour
     {
         GetComponents();
 
-        int random = Random.Range(-1, 2);
-        isMovingRight = random > 0;
-
-        currentViewRange = viewRange;
-
-        if (viewRangeOnDamage < viewRange)
-            viewRangeOnDamage = viewRange * 2;
-
+        ResetAI();
+        
         SubscribeOnEvents();
 
-        normalRightX = Mathf.Abs(transform.localScale.x) * stats.normalXMultiplicator;
+        SetNormalRightX();
 
         ChangeState(State.idle); 
         Patrool();
@@ -80,12 +75,33 @@ public class AI : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
+    private void SetNormalRightX() 
+        => normalRightX = Mathf.Abs(transform.localScale.x) * stats.normalXMultiplicator;
+
     private void SubscribeOnEvents()
     {
-        UnityAction action = new(TryFindNewEnemy);
-        action += MultiplyViewRange;
+        GetComponent<Health>().BeforeDamageRecevingEvent.AddListener(BeforeReceivingDamageEvent);
 
-        GetComponent<Health>().BeforeDamageRecevingEvent.AddListener(action);
+        Global.OnReplaceEvent.AddListener(ResetAI);
+    }
+
+    private void BeforeReceivingDamageEvent()
+    {
+        TryFindNewEnemy();
+        MultiplyViewRange();
+    }
+
+    private void ResetAI()
+    {
+        int random = Random.Range(-2, 2);
+        isMovingRight = random > 0;
+
+        currentViewRange = normalViewRange;
+
+        if (viewRangeOnDamage < normalViewRange)
+            viewRangeOnDamage = normalViewRange * 1.5f;
+
+        ChangeState(State.idle);
     }
 
     private void FixedUpdate()
@@ -127,7 +143,7 @@ public class AI : MonoBehaviour
                 break;
             case State.fight:
                 if (target == null || target.GetComponent<Health>() == null 
-                    || stats.weapon == null || !stats.weapon.HavePossibitilyToAttack())
+                    || stats.weapon == null || !stats.weapon.IsAttackPosDefined())
                 {
                     ChangeState(State.idle);
                     return;
@@ -153,9 +169,9 @@ public class AI : MonoBehaviour
 
                 if (stats.weapon.IsEnemyInRange(target.GetComponent<Health>()))
                 {
-                    stats.TryAttack();
+                    stats.TryToAttack();
                 }
-                else if (stats.CanMove())
+                else if (stats.CanChangePosition())
                 {
                     if (Math.Abs(Vector2.Distance(currentPos, targetPos) - optimalDistanceToEnemy) > maxDistanceFromOptimal &&
                        CanMoveForwards())
@@ -191,7 +207,7 @@ public class AI : MonoBehaviour
             isMovingRight = !isMovingRight;
             haveToTurnAround = true;
         }
-        else if (stats.CanMove())
+        else if (stats.CanChangePosition())
         {
             Move(isMovingRight);
         }
@@ -227,7 +243,7 @@ public class AI : MonoBehaviour
     {
         yield return new WaitForSeconds(10f);
 
-        currentViewRange = viewRange;
+        currentViewRange = normalViewRange;
     }
 
     private void TryFindNewEnemy()
@@ -248,7 +264,7 @@ public class AI : MonoBehaviour
 
     private void Move(bool plus)
     {
-        if (!stats.CanMove() || !stats.isGrounded)
+        if (!stats.CanChangePosition() || !stats.isGrounded)
             return;
 
         float distance = plus ? currentSpeed : -currentSpeed;
@@ -277,7 +293,7 @@ public class AI : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, viewRange);
+        Gizmos.DrawWireSphere(transform.position, normalViewRange);
 
         Gizmos.color = Color.magenta;
         Gizmos.DrawWireSphere(transform.position, viewRangeOnDamage);

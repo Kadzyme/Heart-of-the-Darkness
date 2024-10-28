@@ -5059,6 +5059,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18f1d543fd6e21549907f7515f122ebd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  filter:
+    useTriggers: 0
+    useLayerMask: 0
+    useDepth: 0
+    useOutsideDepth: 0
+    useNormalAngle: 0
+    useOutsideNormalAngle: 0
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 64
+    minDepth: 0
+    maxDepth: 0
+    minNormalAngle: 0
+    maxNormalAngle: 0
 --- !u!60 &612156871108748471
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -5253,6 +5267,7 @@ GameObject:
   - component: {fileID: 7313517759360554198}
   - component: {fileID: 4519942903753943256}
   - component: {fileID: 2021280035964613832}
+  - component: {fileID: 54985711431625914}
   m_Layer: 6
   m_Name: Skeleton
   m_TagString: Untagged
@@ -5419,7 +5434,6 @@ MonoBehaviour:
   movementSpeed: 2.5
   currentMovementSpeed: 0
   jumpForce: 2
-  blockMoveOnAttack: 1
   fraction: 1
   normalXMultiplicator: -1
   effects: []
@@ -5451,7 +5465,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeToStay: 2
   maxFollowTime: 5
-  viewRange: 6
+  normalViewRange: 5
   viewRangeOnDamage: 15
   borderSensor: {fileID: 4638909872352325574}
   patrool: 1
@@ -5565,3 +5579,16 @@ MonoBehaviour:
   changeColor: 1
   colorToChange: {r: 1, g: 0.5634025, b: 0, a: 1}
   time: 0.1
+--- !u!114 &54985711431625914
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9124936117069194157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 870647aafcd249d4d9727bf9823b5808, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isRevivable: 1

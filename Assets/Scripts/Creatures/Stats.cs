@@ -23,8 +23,6 @@ public class Stats : MonoBehaviour
     [HideInInspector] public float currentMovementSpeed;
     public float jumpForce;
 
-    [SerializeField] private bool blockMoveOnAttack = true;
-
     public Fraction fraction;
 
     public int normalXMultiplicator = 1;
@@ -60,45 +58,45 @@ public class Stats : MonoBehaviour
 
     private void GetComponents()
     {
-        weapon ??= GetComponent<Weapon>();
+        weapon = GetComponent<Weapon>();
         animatorController = GetComponent<AnimatorController>();
     }
 
     private void SubscribeOnEvents()
     {
-        UnityAction action = new(weapon.EndAttackWeap);
-        action += weapon.ResetCombo;
-        action += animatorController.PlayStunAnim;
-        action += FixAnim;
-        action += StayStunned;
-        OnStunStartEvent.AddListener(action);
+        OnStunStartEvent.AddListener(OnStunStart);
 
-        action = new(StayNotStunned);
-        action += UnFixAnim;
-        OnStunEndEvent.AddListener(action);
+        OnStunEndEvent.AddListener(OnStunEnd);
 
-        action = new(UnlockPos);
-        weapon.OnAttackEndEvent.AddListener(action);
+        weapon.OnAttackEndEvent.AddListener(OnAttackEnd);
     }
 
-    private void FixAnim()
-        => isAnimFixed = true;
+    private void OnStunStart()
+    {
+        weapon.EndAttack();
+        weapon.ResetCombo();
+        animatorController.PlayStunAnim();
+        isAnimFixed = true;
+        isStunned = true;
+    }
 
-    private void UnFixAnim()
-        => isAnimFixed = false;
+    private void OnStunEnd()
+    {
+        isStunned = false;
+        isAnimFixed = false;
+    }
 
-    private void StayStunned()
-        => isStunned = true;
-
-    private void StayNotStunned()
-        => isStunned = false;
+    private void OnAttackEnd()
+    {
+        positionLocked = false;
+    }
 
     private void Update()
     {
         currentStoppingTime -= Time.deltaTime;
         isGrounded = groundSensor.State();
 
-        if (!CanMove())
+        if (!CanChangePosition())
         {
             Rigidbody2D rb = GetComponent<Rigidbody2D>();
             rb.linearVelocity = Vector3.zero;
@@ -109,6 +107,9 @@ public class Stats : MonoBehaviour
         animatorController.SetIsGrounded(isGrounded);
         animatorController.SetIsStunned(isStunned);
     }
+
+    public bool CanChangePosition()
+        => !positionLocked && currentStoppingTime < 0 && !isStunned && !isAttacking;
 
     private void UpdateEffects()
     {
@@ -139,16 +140,28 @@ public class Stats : MonoBehaviour
         }
     }
 
+    public bool TryToAttack()
+    {
+        bool haveAttacked = weapon.TryAttack();
+
+        if (!isStunned && haveAttacked)
+        {
+            positionLocked = true;
+        }
+
+        return haveAttacked;
+    }
+
     public void AddEffect(Effect newEffect)
     {
         effects.Add(newEffect);
 
         newEffect.currentDuringTime = newEffect.duringTime;
 
-        CheckEffect(newEffect);
+        CheckEffectType(newEffect);
     }
 
-    public void CheckEffect(Effect effect)
+    private void CheckEffectType(Effect effect)
     {
         switch (effect.effectType)
         {
@@ -190,27 +203,4 @@ public class Stats : MonoBehaviour
             effects.Remove(effect);
         }
     }
-
-    public bool CanMove()
-        => !positionLocked && currentStoppingTime < 0 && !isStunned && !isAttacking;
-
-    public bool TryAttack()
-    {
-        if (weapon.CanAttack() && !isStunned && weapon.CanActivateAnim())
-        {
-            if (blockMoveOnAttack)
-                LockPos();
-
-            weapon.ActivateAnim();
-
-            return true;
-        }
-        return false;
-    }
-
-    private void LockPos()
-        => positionLocked = true;
-
-    private void UnlockPos()
-        => positionLocked = false;
 }

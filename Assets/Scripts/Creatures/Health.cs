@@ -12,16 +12,19 @@ public class Health : MonoBehaviour
 
     private void Start()
     {
+        Global.OnReplaceEvent.AddListener(RestoreHealth);
+
         BeforeDamageRecevingEvent ??= new();
 
-        RestoreHealth();
-
-        if (healthBar != null)
-            healthBar.SetAmount(health.currentAmount / health.maxAmount);
+        RestoreHealth();        
     }
 
     public void RestoreHealth()
-        => health.currentAmount = health.maxAmount;
+    { 
+        health.currentAmount = health.maxAmount;
+
+        SetHealthBarAmount();
+    }
 
     public void UpdateHealth(Damage damage)
     {
@@ -77,18 +80,6 @@ public class Health : MonoBehaviour
 
     private void Death()
     {
-        /*if (stats.isRevivable)
-        {
-            GameObject spawnedObject = Instantiate(gameObject, pointOfSpawn, Quaternion.identity);
-            spawnedObject.transform.SetParent(transform.parent);
-            spawnedObject.SetActive(false);
-            Global.objectsToEnable.Add(spawnedObject);
-            Global.objectsToEnable.Remove(gameObject);
-        }
-
-        if (!gameObject.CompareTag("Player"))
-            Global.objectsToMove.Remove(gameObject);*/
-
         Destroy(gameObject);
     }
 }

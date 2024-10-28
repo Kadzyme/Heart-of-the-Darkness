@@ -41,6 +41,28 @@ public class Weapon : MonoBehaviour
     [HideInInspector] public UnityEvent OnAttackStartEvent = new();
     [HideInInspector] public UnityEvent OnAttackEndEvent = new();
 
+    public bool TryAttack()
+    {
+        if (CanAttack())
+        {
+            ActivateAnim();
+
+            return true;
+        }
+        return false;
+    }
+
+    private bool CanAttack()
+        => currentCooldown < 0 && !attackLocked && !doDamage;
+
+    private void ActivateAnim()
+    {
+        attackLocked = true;
+
+        animatorController.IsAttacking();
+        animatorController.PlayAttackAnim(currentCombo);
+    }
+
     private void Start()
     {
         damage.owner = gameObject;
@@ -64,14 +86,11 @@ public class Weapon : MonoBehaviour
 
     private void OnEndAttack()
     {
-        EndDoingDamage();
-        UpdateCombo();
-        UnlockAttack();
         animatorController.IsAttackingFalse();
+        doDamage = false;
+        UpdateCombo();
+        attackLocked = false;
     }
-
-    public void EndDoingDamage()
-        => doDamage = false;
 
     private void UpdateCombo()
     {
@@ -81,14 +100,25 @@ public class Weapon : MonoBehaviour
 
         if (currentCombo >= combo.Length)
         {
-            ResetCombo();
+            ResetCombo(); 
+            SetComboCooldown();
         }
     }
 
-    public bool CanAttack()
-        => currentCooldown < 0 && !attackLocked;
+    public void ResetCombo()
+    {
+        currentCombo = 0;
+    }
 
-    public bool HavePossibitilyToAttack()
+    private void SetComboCooldown()
+    {
+        if (randomCooldownMultiplicator == Vector2.zero || randomCooldownMultiplicator.x > randomCooldownMultiplicator.y)
+            currentCooldown = cooldown;
+        else
+            currentCooldown = cooldown * Random.Range(randomCooldownMultiplicator.x, randomCooldownMultiplicator.y);
+    }
+
+    public bool IsAttackPosDefined()
         => combo[currentCombo].attackPosition != null;
 
     public bool IsEnemyInRange(Health enemy)
@@ -100,37 +130,11 @@ public class Weapon : MonoBehaviour
         return false;
     }
 
-    public bool CanActivateAnim()
-        => !doDamage && !attackLocked;
-
-    public void ActivateAnim()
-    {
-        LockAttack();
-        animatorController.IsAttacking();
-        animatorController.PlayAttackAnim(currentCombo);
-    }
-
-    public void LockAttack()
-        => attackLocked = true;
-
-    public void UnlockAttack()
-        => attackLocked = false;
-
     public void StartAttack()
         => OnAttackStartEvent.Invoke();
 
-    public void EndAttackWeap()
+    public void EndAttack()
         => OnAttackEndEvent.Invoke();
-
-    public void ResetCombo()
-    {
-        currentCombo = 0;
-
-        if (randomCooldownMultiplicator == Vector2.zero || randomCooldownMultiplicator.x > randomCooldownMultiplicator.y)
-            currentCooldown = cooldown;
-        else
-            currentCooldown = cooldown * Random.Range(randomCooldownMultiplicator.x, randomCooldownMultiplicator.y);
-    }
 
     private void Update()
     {
@@ -138,7 +142,7 @@ public class Weapon : MonoBehaviour
 
         currentComboDuration -= Time.deltaTime;
 
-        if (currentComboDuration < 0)
+        if (currentComboDuration < 0 && currentCombo != 0)
             currentCombo = 0;
 
         if (doDamage)
@@ -157,18 +161,19 @@ public class Weapon : MonoBehaviour
 
         foreach (Health target in targets)
         {
-            if (Global.IsEnemy(ownerFraction, target.GetComponent<Stats>().fraction)
-                && !attackedObjectsHealth.Contains(target))
+            if (target.TryGetComponent<Stats>(out var statsOfTarget))
             {
-                Damage newDamage = damage;
-                newDamage.amount *= combo[currentCombo].damageMultiplicator;
-                attackedObjectsHealth.Add(target);
-                target.UpdateHealth(newDamage);
-                if (target.GetComponent<Stats>() != null)
+                if (Global.IsEnemy(ownerFraction, statsOfTarget.fraction)
+                && !attackedObjectsHealth.Contains(target))
                 {
+                    Damage newDamage = damage;
+                    newDamage.amount *= combo[currentCombo].damageMultiplicator;
+                    attackedObjectsHealth.Add(target);
+                    target.UpdateHealth(newDamage);
+                
                     foreach (var effect in combo[currentCombo].additionalEffects)
                     {
-                        target.GetComponent<Stats>().AddEffect(effect);
+                        statsOfTarget.AddEffect(effect);
                     }
                 }
             }
