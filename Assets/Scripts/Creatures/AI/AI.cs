@@ -295,6 +295,10 @@ public class AI : MonoBehaviour
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, normalViewRange);
 
+        Gizmos.color = Color.red;
+        Vector3 borderPos = borderSensor.position;
+        Gizmos.DrawLine(borderPos, new Vector3(borderPos.x, borderPos.y - 0.2f, borderPos.z));
+
         Gizmos.color = Color.magenta;
         Gizmos.DrawWireSphere(transform.position, viewRangeOnDamage);
 

@@ -313,7 +313,7 @@ GameObject:
   - component: {fileID: 1613897949122989328}
   - component: {fileID: 23663977657757551}
   - component: {fileID: 2098700114462562203}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GroundSensor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -772,10 +772,7 @@ MonoBehaviour:
   jumpForce: 200
   fraction: 0
   normalXMultiplicator: -1
-  effects: []
   groundSensor: {fileID: 2098700114462562203}
-  positionLocked: 0
-  currentStoppingTime: 0
   isGrounded: 0
   weapon: {fileID: 0}
   isStunned: 0
@@ -908,20 +905,10 @@ MonoBehaviour:
   combo:
   - damageMultiplicator: 1
     attackPosition: {fileID: 2758314553039345279}
-    additionalEffects:
-    - effectType: 2
-      amount: 0
-      duringTime: 0.3
-      currentDuringTime: 0
-      isEndless: 0
+    additionalEffects: []
   - damageMultiplicator: 0.9
     attackPosition: {fileID: 4655620193659967196}
-    additionalEffects:
-    - effectType: 2
-      amount: 0
-      duringTime: 0.2
-      currentDuringTime: 0
-      isEndless: 0
+    additionalEffects: []
   maxComboDuration: 2
   cooldown: 0
   randomCooldownMultiplicator: {x: 0, y: 0}
@@ -942,7 +929,7 @@ GameObject:
   - component: {fileID: 4718970544922852559}
   - component: {fileID: 3722576741347038717}
   - component: {fileID: 1585201532157660177}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: WallSensor_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1122,7 +1109,7 @@ GameObject:
   - component: {fileID: 6432830142511240915}
   - component: {fileID: 5526007652071241071}
   - component: {fileID: 2189815981435907929}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: WallSensor_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -27,12 +27,11 @@ public class Stats : MonoBehaviour
 
     public int normalXMultiplicator = 1;
 
-    [SerializeField] private List<Effect> effects = new();
+    private List<Effect> effects = new();
 
     public GroundSensor groundSensor;
 
-    [SerializeField] private bool positionLocked = false;
-    [SerializeField] private float currentStoppingTime = 0;
+    private bool positionLocked = false;
 
     [HideInInspector] public bool isGrounded;
 
@@ -95,7 +94,6 @@ public class Stats : MonoBehaviour
 
     private void Update()
     {
-        currentStoppingTime -= Time.deltaTime;
         isGrounded = groundSensor.State();
 
         if (!CanChangePosition())
@@ -111,7 +109,7 @@ public class Stats : MonoBehaviour
     }
 
     public bool CanChangePosition()
-        => !positionLocked && currentStoppingTime < 0 && !isStunned && !isAttacking;
+        => !positionLocked && !isStunned && !isAttacking;
 
     private void UpdateEffects()
     {
