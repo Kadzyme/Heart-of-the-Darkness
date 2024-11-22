@@ -106,17 +106,17 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 0.33333334
-    functionName: StartAttack
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.33333334
     functionName: ChangeAnimatorSpeed
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 1
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.33333334
+    functionName: StartAttack
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
     intParameter: 0
     messageOptions: 0
   - time: 0.5

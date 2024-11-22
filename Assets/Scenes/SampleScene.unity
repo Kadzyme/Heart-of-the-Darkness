@@ -337,6 +337,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 218355477644932403, guid: 43ded28d80914044c8b5df424c68c596, type: 3}
+      propertyPath: patrool
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 267586584183578121, guid: 43ded28d80914044c8b5df424c68c596, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.76
@@ -1774,6 +1778,63 @@ CompositeCollider2D:
   m_OffsetDistance: 0.00005
   m_UseDelaunayMesh: 0
   m_CompositeGameObject: {fileID: 196649862204216355}
+--- !u!1001 &3241294180058825217
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1801260296531027750, guid: 695d5585fdd93724c8b05718e0500ca1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 11.38
+      objectReference: {fileID: 0}
+    - target: {fileID: 1801260296531027750, guid: 695d5585fdd93724c8b05718e0500ca1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 1801260296531027750, guid: 695d5585fdd93724c8b05718e0500ca1, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1801260296531027750, guid: 695d5585fdd93724c8b05718e0500ca1, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1801260296531027750, guid: 695d5585fdd93724c8b05718e0500ca1, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1801260296531027750, guid: 695d5585fdd93724c8b05718e0500ca1, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1801260296531027750, guid: 695d5585fdd93724c8b05718e0500ca1, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1801260296531027750, guid: 695d5585fdd93724c8b05718e0500ca1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1801260296531027750, guid: 695d5585fdd93724c8b05718e0500ca1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1801260296531027750, guid: 695d5585fdd93724c8b05718e0500ca1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5146216222373496542, guid: 695d5585fdd93724c8b05718e0500ca1, type: 3}
+      propertyPath: m_Name
+      value: SpearTrap
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 695d5585fdd93724c8b05718e0500ca1, type: 3}
 --- !u!1001 &4113239269820038829
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1845,3 +1906,4 @@ SceneRoots:
   - {fileID: 196649861957283891}
   - {fileID: 736071592}
   - {fileID: 4113239269820038829}
+  - {fileID: 3241294180058825217}

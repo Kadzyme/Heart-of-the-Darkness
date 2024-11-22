@@ -254,7 +254,7 @@ public class AI : MonoBehaviour
         {
             Stats otherStats = other.GetComponent<Stats>();
 
-            if (otherStats != null && Global.IsEnemy(stats.fraction, otherStats.fraction))
+            if (other.GetComponent<Health>() != null && otherStats != null && Global.IsEnemy(stats.fraction, otherStats.fraction))
             {
                 target = other.gameObject;
                 ChangeState(State.fight);

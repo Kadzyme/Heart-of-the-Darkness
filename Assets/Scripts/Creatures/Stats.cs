@@ -94,7 +94,8 @@ public class Stats : MonoBehaviour
 
     private void Update()
     {
-        isGrounded = groundSensor.State();
+        if (groundSensor)
+            isGrounded = groundSensor.State();
 
         if (!CanChangePosition())
         {
@@ -104,8 +105,11 @@ public class Stats : MonoBehaviour
 
         UpdateEffects();
 
-        animatorController.SetIsGrounded(isGrounded);
-        animatorController.SetIsStunned(isStunned);
+        if (groundSensor)
+        {
+            animatorController.SetIsGrounded(isGrounded);
+            animatorController.SetIsStunned(isStunned);
+        }
     }
 
     public bool CanChangePosition()
