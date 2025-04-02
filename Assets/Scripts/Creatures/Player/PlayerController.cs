@@ -55,7 +55,6 @@ public class PlayerController : MonoBehaviour
     {
         stats.weapon.OnAttackStartEvent.AddListener(OnStartAttack);
         stats.weapon.OnAttackEndEvent.AddListener(OnEndAttack);
-        Global.OnReplaceEvent.AddListener(MoveToLastCheckPoint);
     }
 
     private void OnStartAttack()
@@ -63,11 +62,6 @@ public class PlayerController : MonoBehaviour
 
     private void OnEndAttack()
         => stats.isAttacking = false;
-
-    private void MoveToLastCheckPoint()
-    {
-        transform.position = Global.checkpointPos;
-    }
 
     private void Update()
     {

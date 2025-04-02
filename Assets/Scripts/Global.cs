@@ -7,13 +7,13 @@ public class Global : MonoBehaviour
     public static UnityEvent OnReplaceEvent = new();
     public static List<GameObject> objectsToRevive = new();
 
-    public static Vector2 checkpointPos = Vector2.zero;
+    private static Vector2 checkpointPos = Vector2.zero;
     [SerializeField] private Transform startCheckpointPos;
 
     public static Transform currentPlayer;
 
-    private static Transform staticPlayerPrefab;
-    [SerializeField] private Transform playerPrefab;
+    private static Transform playerPrefab;
+    [SerializeField] private Transform startPlayerPrefab;
 
     public static int groundLayer;
     [SerializeField] private int groundLayerNum;
@@ -25,14 +25,27 @@ public class Global : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
 
-        staticPlayerPrefab = playerPrefab;
-        checkpointPos = startCheckpointPos.position;
+        playerPrefab = startPlayerPrefab;
 
         groundLayer = 1 << groundLayerNum;
         unitsLayer = 1 << unitsLayerNum;
 
+        SetNewCheckPointPos(startCheckpointPos.position);
+
+        OnReplaceEvent.AddListener(MovePlayerToCheckPoint);
+
         CreateNewHero();
     }
+
+    public static void SetNewCheckPointPos(Vector2 newPos)
+    {
+        RaycastHit2D hit = Physics2D.Raycast(newPos, Vector2.down, 10f, groundLayer);
+
+        checkpointPos = hit ? hit.point : newPos;
+    }
+
+    private void MovePlayerToCheckPoint()
+       => currentPlayer.position = checkpointPos;
 
     private void FixedUpdate()
     {
@@ -42,9 +55,9 @@ public class Global : MonoBehaviour
 
     public static void CreateNewHero()
     {
-        currentPlayer = Instantiate(staticPlayerPrefab);
-        OnReplaceEvent.Invoke();
+        currentPlayer = Instantiate(playerPrefab);
         ReviveObjects();
+        OnReplaceEvent.Invoke();
     }
 
     public static void ReviveObjects()
@@ -56,5 +69,5 @@ public class Global : MonoBehaviour
     }
 
     public static bool IsEnemy(Fraction obj1, Fraction obj2)
-        => obj1 != obj2 && obj2 != Fraction.passive;
+        => obj1 != obj2;
 }

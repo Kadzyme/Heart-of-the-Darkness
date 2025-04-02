@@ -638,7 +638,7 @@ GameObject:
   - component: {fileID: 6874853038924881352}
   m_Layer: 6
   m_Name: PlayerKnight
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -652,9 +652,9 @@ Transform:
   m_GameObject: {fileID: 7770351040147862578}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -23.644, y: -1.995, z: 0.71974564}
-  m_LocalScale: {x: 5, y: 5, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: 0, y: 0, z: 0.71974564}
+  m_LocalScale: {x: 4, y: 4, z: 0.8}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 7944389500027812757}
   - {fileID: 4718970544922852559}

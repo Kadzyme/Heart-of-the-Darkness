@@ -35,6 +35,9 @@ public class AI : MonoBehaviour
     [SerializeField] private float optimalDistanceToEnemy;
     [SerializeField] private float maxDistanceFromOptimal = 0.4f;
 
+    [SerializeField] private float delayToTurnAround = 0f;
+    private float currentDelayToTurnAround;
+
     private float normalRightX = 1;
 
     private State currentState;
@@ -133,13 +136,13 @@ public class AI : MonoBehaviour
 
                 currentTimeToStay -= deltaTime;
 
-                if (currentTimeToStay < 0)
-                {
-                    if (haveToTurnAround)
-                        TurnAround();
+                if (haveToTurnAround && currentDelayToTurnAround < 0)
+                    TurnAround();
+                else
+                    currentDelayToTurnAround -= deltaTime;
 
+                if (currentTimeToStay < 0)
                     Patrool();
-                }
                 break;
             case State.fight:
                 if (target == null || target.GetComponent<Health>() == null 
@@ -206,6 +209,7 @@ public class AI : MonoBehaviour
             currentTimeToStay = timeToStay * Random.Range(0.8f, 1.2f);
             isMovingRight = !isMovingRight;
             haveToTurnAround = true;
+            currentDelayToTurnAround = delayToTurnAround;
         }
         else if (stats.CanChangePosition())
         {

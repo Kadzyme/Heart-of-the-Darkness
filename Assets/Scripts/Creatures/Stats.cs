@@ -23,6 +23,8 @@ public class Stats : MonoBehaviour
     [HideInInspector] public float currentMovementSpeed;
     public float jumpForce;
 
+    [SerializeField] private bool isImmuneToEffects;
+
     public Fraction fraction;
 
     public int normalXMultiplicator = 1;
@@ -158,6 +160,9 @@ public class Stats : MonoBehaviour
 
     public void AddEffect(Effect newEffect)
     {
+        if (isImmuneToEffects)
+            return;
+
         effects.Add(newEffect);
 
         newEffect.currentDuringTime = newEffect.duringTime;

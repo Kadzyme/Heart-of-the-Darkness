@@ -6008,8 +6008,8 @@ Transform:
   m_GameObject: {fileID: 8845522413821740621}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.445423, y: -2.9774113, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.4, y: 1.4, z: 1.4}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 377286134117737349}
@@ -6182,15 +6182,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e13d4bd9ef43ce4a99ca5e6f61ce429, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 5
+  movementSpeed: 5.5
   currentMovementSpeed: 0
   jumpForce: 175
+  isImmuneToEffects: 0
   fraction: 0
   normalXMultiplicator: -1
-  effects: []
   groundSensor: {fileID: 377286134117737346}
-  positionLocked: 0
-  currentStoppingTime: 0
   isGrounded: 0
   weapon: {fileID: 0}
   isStunned: 0
@@ -6256,10 +6254,10 @@ MonoBehaviour:
   - damageMultiplicator: 1
     attackPosition: {fileID: 3243653922001413560}
     additionalEffects: []
-  - damageMultiplicator: 0.85
+  - damageMultiplicator: 0.8
     attackPosition: {fileID: 3243653921861010416}
     additionalEffects: []
-  - damageMultiplicator: 1.2
+  - damageMultiplicator: 1.4
     attackPosition: {fileID: 3243653921578437205}
     additionalEffects:
     - effectType: 2

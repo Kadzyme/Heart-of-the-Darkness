@@ -7,7 +7,10 @@ public class AttackPosition : MonoBehaviour
     [SerializeField] private ContactFilter2D filter = new();
 
     private void Start()
-        => GetComponent<Collider2D>().isTrigger = true;
+    { 
+        GetComponent<Collider2D>().isTrigger = true; 
+        //filter.SetLayerMask(Global.unitsLayer);
+    }
 
     public List<Health> CheckDamagableInRange()
     {
